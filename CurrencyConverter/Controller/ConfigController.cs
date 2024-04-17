@@ -9,7 +9,12 @@ namespace CurrencyConverter.Controller;
 [Route("api/v{version:apiVersion}/[controller]")]
 public class ConfigController : ControllerBase
 {
-    private readonly ICurrencyConverter _currencyConverter = new Convertor.CurrencyConverter();
+    private readonly ICurrencyConverter _currencyConverter;
+
+    public ConfigController(ICurrencyConverter currencyConverter)
+    {
+        _currencyConverter = currencyConverter;
+    }
 
     [HttpDelete]
     public void ClearConfiguration()

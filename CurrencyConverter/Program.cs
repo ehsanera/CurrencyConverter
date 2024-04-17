@@ -1,4 +1,5 @@
 using Asp.Versioning.Routing;
+using CurrencyConverter.Convertor;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ builder.Services.AddControllers();
 builder.Services.AddApiVersioning(options => { options.ReportApiVersions = true; });
 builder.Services.Configure<RouteOptions>(options => { options.ConstraintMap["apiVersion"] = typeof(ApiVersionRouteConstraint); });
 builder.Services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo { Title = "Your API", Version = "v1" }); });
+
+builder.Services.AddSingleton<ICurrencyConverter, CurrencyConverter.Convertor.CurrencyConverter>();
 
 var app = builder.Build();
 

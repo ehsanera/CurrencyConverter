@@ -2,6 +2,8 @@
 
 public class CurrencyConverter : ICurrencyConverter
 {
+    private readonly object _lock = new();
+
     private IEnumerable<Tuple<string, string, double>> _conversionRates = new List<Tuple<string, string, double>>
     {
         new("USD", "CAD", 1.34),
@@ -12,12 +14,18 @@ public class CurrencyConverter : ICurrencyConverter
 
     public void ClearConfiguration()
     {
-        _conversionRates = new List<Tuple<string, string, double>>();
+        lock (_lock)
+        {
+            _conversionRates = new List<Tuple<string, string, double>>();
+        }
     }
 
     public void UpdateConfiguration(IEnumerable<Tuple<string, string, double>> conversionRates)
     {
-        _conversionRates = conversionRates;
+        lock (_lock)
+        {
+            _conversionRates = conversionRates;
+        }
     }
 
     public double Convert(string fromCurrency, string toCurrency, double amount)
@@ -45,13 +53,19 @@ public class CurrencyConverter : ICurrencyConverter
 
     private double? FindConversionRate(string fromCurrency, string toCurrency)
     {
-        var rateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item1 == fromCurrency && tuple.Item2 == toCurrency);
-        return rateTuple?.Item3;
+        lock (_lock)
+        {
+            var rateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item1 == fromCurrency && tuple.Item2 == toCurrency);
+            return rateTuple?.Item3;
+        }
     }
 
     private string FindIntermediateCurrency(string fromCurrency, string toCurrency)
     {
-        var intermediateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item2 == toCurrency && tuple.Item1 != fromCurrency);
-        return intermediateTuple?.Item1;
+        lock (_lock)
+        {
+            var intermediateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item2 == toCurrency && tuple.Item1 != fromCurrency);
+            return intermediateTuple?.Item1;
+        }
     }
 }

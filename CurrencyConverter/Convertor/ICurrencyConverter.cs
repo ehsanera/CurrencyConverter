@@ -1,6 +1,6 @@
 ﻿namespace CurrencyConverter.Convertor;
 
-interface ICurrencyConverter
+public interface ICurrencyConverter
 {
     /// <summary>
     /// Clears any prior configuration.

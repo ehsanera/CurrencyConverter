@@ -112,3 +112,4 @@ C:\Users\13961469\RiderProjects\CurrencyConverter\TestCurrencyConverter\obj\Debu
 C:\Users\13961469\RiderProjects\CurrencyConverter\TestCurrencyConverter\obj\Debug\net8.0\TestCurrencyConverter.pdb
 C:\Users\13961469\RiderProjects\CurrencyConverter\TestCurrencyConverter\obj\Debug\net8.0\TestCurrencyConverter.genruntimeconfig.cache
 C:\Users\13961469\RiderProjects\CurrencyConverter\TestCurrencyConverter\obj\Debug\net8.0\ref\TestCurrencyConverter.dll
+C:\Users\13961469\RiderProjects\CurrencyConverter\TestCurrencyConverter\obj\Debug\net8.0\TestCurrencyConverter.sourcelink.json
