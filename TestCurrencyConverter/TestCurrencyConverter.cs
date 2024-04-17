@@ -89,5 +89,15 @@ public class TestCurrencyConverter
 
             Assert.That(result, Is.EqualTo(expected));
         }
+        
+        [Test]
+        public void Convert_USD_to_CSF()
+        {
+            double amount = 100;
+
+            double result = _converter.Convert("USD", "CSF", amount);
+
+            Assert.That(result, Is.EqualTo(-1));
+        }
     }
 }

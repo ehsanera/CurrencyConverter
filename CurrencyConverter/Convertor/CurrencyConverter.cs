@@ -45,6 +45,7 @@ public class CurrencyConverter : ICurrencyConverter
             }
 
             var intermediateCurrency = FindIntermediateCurrency(fromCurrency, toCurrency);
+            if (intermediateCurrency == null) return -1;
             var intermediateAmount = Convert(fromCurrency, intermediateCurrency, amount);
             fromCurrency = intermediateCurrency;
             amount = intermediateAmount;
@@ -60,7 +61,7 @@ public class CurrencyConverter : ICurrencyConverter
         }
     }
 
-    private string FindIntermediateCurrency(string fromCurrency, string toCurrency)
+    private string? FindIntermediateCurrency(string fromCurrency, string toCurrency)
     {
         lock (_lock)
         {
