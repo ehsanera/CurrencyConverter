@@ -33,3 +33,4 @@ C:\Users\13961469\RiderProjects\CurrencyConverter\CurrencyConverter\obj\Debug\ne
 C:\Users\13961469\RiderProjects\CurrencyConverter\CurrencyConverter\obj\Debug\net8.0\CurrencyConverter.pdb
 C:\Users\13961469\RiderProjects\CurrencyConverter\CurrencyConverter\obj\Debug\net8.0\CurrencyConverter.genruntimeconfig.cache
 C:\Users\13961469\RiderProjects\CurrencyConverter\CurrencyConverter\obj\Debug\net8.0\ref\CurrencyConverter.dll
+C:\Users\13961469\RiderProjects\CurrencyConverter\CurrencyConverter\obj\Debug\net8.0\CurrencyConverter.sourcelink.json

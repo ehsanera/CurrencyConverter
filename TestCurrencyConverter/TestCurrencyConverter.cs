@@ -78,5 +78,16 @@ public class TestCurrencyConverter
 
             Assert.That(result, Is.EqualTo(expected));
         }
+        
+        [Test]
+        public void Convert_USD_to_XFR()
+        {
+            double amount = 100;
+            double expected = amount * 1.34 * 0.58 * 0.26;
+
+            double result = _converter.Convert("USD", "XFR", amount);
+
+            Assert.That(result, Is.EqualTo(expected));
+        }
     }
 }

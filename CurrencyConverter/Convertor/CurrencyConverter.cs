@@ -6,7 +6,8 @@ public class CurrencyConverter : ICurrencyConverter
     {
         new("USD", "CAD", 1.34),
         new("CAD", "GBP", 0.58),
-        new("USD", "EUR", 0.86)
+        new("USD", "EUR", 0.86),
+        new("GBP", "XFR", 0.26)
     };
 
     public void ClearConfiguration()
@@ -21,20 +22,36 @@ public class CurrencyConverter : ICurrencyConverter
 
     public double Convert(string fromCurrency, string toCurrency, double amount)
     {
-        var straight = _conversionRates.FirstOrDefault(tuple => tuple.Item1 == fromCurrency && tuple.Item2 == toCurrency);
-        var reverseStraight = _conversionRates.FirstOrDefault(tuple => tuple.Item1 == toCurrency && tuple.Item2 == fromCurrency);
-
-        if (straight != null)
+        while (true)
         {
-            return amount * straight.Item3;
-        }
+            var directRate = FindConversionRate(fromCurrency, toCurrency);
+            if (directRate.HasValue)
+            {
+                return amount * directRate.Value;
+            }
 
-        if (reverseStraight != null)
-        {
-            return amount / reverseStraight.Item3;
-        }
+            var reverseRate = FindConversionRate(toCurrency, fromCurrency);
+            if (reverseRate.HasValue)
+            {
+                return amount / reverseRate.Value;
+            }
 
-        var first = Convert(fromCurrency, "USD", amount);
-        return Convert("USD", toCurrency, first);
+            var intermediateCurrency = FindIntermediateCurrency(fromCurrency, toCurrency);
+            var intermediateAmount = Convert(fromCurrency, intermediateCurrency, amount);
+            fromCurrency = intermediateCurrency;
+            amount = intermediateAmount;
+        }
+    }
+
+    private double? FindConversionRate(string fromCurrency, string toCurrency)
+    {
+        var rateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item1 == fromCurrency && tuple.Item2 == toCurrency);
+        return rateTuple?.Item3;
+    }
+
+    private string FindIntermediateCurrency(string fromCurrency, string toCurrency)
+    {
+        var intermediateTuple = _conversionRates.FirstOrDefault(tuple => tuple.Item2 == toCurrency && tuple.Item1 != fromCurrency);
+        return intermediateTuple?.Item1;
     }
 }
